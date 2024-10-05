@@ -44,3 +44,5 @@ print(f"The best K : {best_k}, accuracy : {best_accuracy:.4f}")
 for k, accuracy in knn_accuracies:
     print(f"K={k}, accuracy={accuracy:.4f}")
 
+
+# %%
