@@ -4,7 +4,6 @@ from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 import pandas as pd
 import numpy as np
-import time
 
 # 创建 Dash 应用
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -90,6 +89,5 @@ def update_graph(n):
 
     return ph_fig, iron_fig
 
-# 运行应用
-if __name__ == '__main__':
-    app.run_server(debug=True)
+# 在Gunicorn中运行时，不需要 app.run_server()
+server = app.server  # 添加这一行，使得Gunicorn
