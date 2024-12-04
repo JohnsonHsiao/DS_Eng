@@ -6,6 +6,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neural_network import MLPClassifier
@@ -103,4 +104,33 @@ test_accuracy = accuracy_score(y_test, y_pred)
 # Display results
 print("Best Hyperparameters:", grid_search.best_params_)
 print("Test Accuracy:", test_accuracy)
+# %%
+# Generate confusion matrix for test set
+conf_matrix = confusion_matrix(y_test, y_pred)
+ConfusionMatrixDisplay(conf_matrix, display_labels=['Not Successful', 'Successful']).plot(cmap='Blues')
+plt.title('Confusion Matrix for Marketing Campaign Classification')
+plt.show()
+
+# Analyzing the results
+tn, fp, fn, tp = conf_matrix.ravel()
+
+# Insights:
+# - True Positives (tp): Cases where the model correctly predicted a successful marketing campaign.
+# - True Negatives (tn): Cases where the model correctly predicted an unsuccessful marketing campaign.
+# - False Positives (fp): Cases where the model incorrectly predicted a successful campaign (Type I error).
+# - False Negatives (fn): Cases where the model missed predicting a successful campaign (Type II error).
+
+print(f'True Positives (TP): {tp}')
+print(f'True Negatives (TN): {tn}')
+print(f'False Positives (FP): {fp}')
+print(f'False Negatives (FN): {fn}')
+
+# Calculate additional metrics
+precision = tp / (tp + fp) if (tp + fp) > 0 else 0
+recall = tp / (tp + fn) if (tp + fn) > 0 else 0
+f1_score = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0
+
+print(f'Precision: {precision:.2f}')
+print(f'Recall: {recall:.2f}')
+print(f'F1 Score: {f1_score:.2f}')
 # %%
